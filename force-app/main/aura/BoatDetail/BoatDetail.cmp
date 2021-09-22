@@ -1,0 +1,58 @@
+<aura:component access="global" >
+	<aura:attribute name="boat" type="Boat__c"/>
+    <aura:attribute name="evtAccess" type="Boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:navigation aura:id="navigation"/>
+    
+    <lightning:card iconName="utility:anchor">
+        <aura:set attribute="title" >
+        	{!v.boat.Contact__r.Name}'s Boat
+        </aura:set>
+        <aura:set attribute="Actions">
+            <aura:if isTrue="{!v.evtAccess}" >
+            	<lightning:button label="Full Details" onclick="{!c.onFullDetails}" />
+                <aura:set attribute="else"><span>hi</span></aura:set>
+            </aura:if>
+        </aura:set>
+        
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="6">
+                <div class="slds-p-horizontal--small">
+                <div class="boatproperty">
+                    <span class="label">Boat Name:</span>
+                    <span>{!v.boat.Name}</span>
+                </div>
+                <div class="boatproperty">
+                    <span class="label">Type:</span>
+                    <span>{!v.boat.BoatType__r.Name}</span>
+                </div>
+                <div class="boatproperty">
+                    <span class="label">Length:</span>
+                    <span> ft</span>
+                    {!v.boat.Length__c}
+                </div>
+                <div class="boatproperty">
+                    <span class="label">Est. Price:</span>
+                    <span><lightning:formattedNumber value="{!v.boat.Price__c}" style="currency" currencyCode="USD" /></span>
+                </div>
+                <div class="boatproperty">
+                    <span class="label">Description:</span>
+                    <span><lightning:formattedRichText value="{!v.boat.Description__c}" /></span>
+                </div>
+            </div>
+                <!-- lightning:outputField fieldName="Name"/>
+                <lightning:outputField fieldName="BoatType__c"/>
+                <lightning:outputField fieldName="Length__c"/>
+                <lightning:outputField fieldName="Price__c"/>
+                <lightning:outputField fieldName="Description__c"/ -->
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <div class="imageview" style="{! 'background-image: url(' + v.boat.Picture__c + ')'}" />
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+        
+    </lightning:card>
+
+</aura:component>

@@ -1,0 +1,34 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="boat" type="Boat__c" />
+    <aura:attribute name="boatReview" type="BoatReview__c" />
+    <aura:attribute name="recordError" type="String" access="private" />
+    <aura:registerEvent name="boatreviewadded" type="c:BoatReviewAdded" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <force:recordData aura:id="service"
+                      targetFields="{!v.boatReview}"
+                      fields="Id,Name,Comment__c,Boat__c,Rating__c"
+                      recordUpdated="{!c.onRecordUpdated}"
+                      targetError="{!v.recordError}"
+                      mode="EDIT"
+                      />
+    <lightning:layout multipleRows="true">
+    	<lightning:layoutItem size="12" >
+            <div class="slds-m-around_xx-small">
+            	<lightning:input name="title" label="Title" value="{!v.boatReview.Name}" />
+            	<lightning:inputRichText label="Description" value="{!v.boatReview.Comment__c}" placeholder="Comment" disabledCategories="FORMAT_FONT" />
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" >
+            <c:FiveStarRating value="{!v.boatReview.Rating__c}" readonly="false" />
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" >
+            <div class="slds-align_absolute-center slds-m-around_x-small">
+            	<lightning:button name="save" iconName="utility:save" label="Submit" onclick="{!c.onSave}"/>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    
+    
+</aura:component>
